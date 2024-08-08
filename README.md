@@ -40,7 +40,7 @@ To use PrimeSense, simply execute the `main()` function which prompts for user i
 python primesense.py
 ```  
 ##Contributing
-Contributions are welcome! If you have suggestions or improvements, please fork the repository and create a pull request or email your respond to me
+Contributions are welcome! If you have suggestions or improvements, please fork the repository and create a pull request or email your respond to me.
 ```
 mahnaznamani007@gmail.com
 ```
