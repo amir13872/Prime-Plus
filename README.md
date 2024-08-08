@@ -39,12 +39,12 @@ To use PrimeSense, simply execute the `main()` function which prompts for user i
 ```bash
 python primesense.py
 ```  
-##Contributing
+## Contributing
 Contributions are welcome! If you have suggestions or improvements, please fork the repository and create a pull request or email your respond to me.
 ```
 mahnaznamani007@gmail.com
 ```
-##License
+## License
 This project is licensed under the MIT License - see the LICENSE file for details.
 ```
 Ensure that the file name `primesense.py` matches the actual name of your Python script. This `README.md` provides a comprehensive overview of the PrimeSense project, its features, usage instructions, and guidelines for contributing.
