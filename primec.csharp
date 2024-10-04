@@ -1,0 +1,147 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+public class PrimeNumberCalculator
+{
+    /**
+     * Returns a list of prime numbers up to n using the Sieve of Eratosthenes algorithm.
+     */
+    public static List<int> SieveOfEratosthenes(int n)
+    {
+        if (n < 2)
+        {
+            return new List<int>();
+        }
+        bool[] isPrime = new bool[n + 1];
+        for (int i = 0; i <= n; i++)
+        {
+            isPrime[i] = true;
+        }
+        isPrime[0] = isPrime[1] = false;  // 0 and 1 are not primes
+        for (int p = 2; p * p <= n; p++)
+        {
+            if (isPrime[p])
+            {
+                for (int multiple = p * p; multiple <= n; multiple += p)
+                {
+                    isPrime[multiple] = false;
+                }
+            }
+        }
+        List<int> primes = new List<int>();
+        for (int p = 2; p <= n; p++)
+        {
+            if (isPrime[p])
+            {
+                primes.Add(p);
+            }
+        }
+        return primes;
+    }
+
+    /**
+     * Finds all prime numbers in the range [start, end].
+     */
+    public static List<int> FindPrimesInRange(int start, int end)
+    {
+        if (start > end || start < 0 || end < 0)
+        {
+            return new List<int>();
+        }
+        List<int> primesUpToEnd = SieveOfEratosthenes(end);
+        List<int> primesInRange = new List<int>();
+        foreach (int p in primesUpToEnd)
+        {
+            if (p >= start)
+            {
+                primesInRange.Add(p);
+            }
+        }
+        return primesInRange;
+    }
+
+    /**
+     * Provides the last three prime numbers and the count of prime numbers in the range [start, end].
+     */
+    public static (List<int>, int) PrimeStatistics(int start, int end)
+    {
+        List<int> primesInRange = FindPrimesInRange(start, end);
+        int countOfPrimes = primesInRange.Count;
+        List<int> lastThreePrimes = new List<int>();
+        if (primesInRange.Count >= 3)
+        {
+            lastThreePrimes = primesInRange.GetRange(primesInRange.Count - 3, 3);
+        }
+        else
+        {
+            lastThreePrimes = primesInRange;
+        }
+        return (lastThreePrimes, countOfPrimes);
+    }
+
+    /**
+     * Prompts the user to enter the start and end of the range, with validation.
+     */
+    public static (int, int) GetUserInput()
+    {
+        int start, end;
+        while (true)
+        {
+            try
+            {
+                Console.Write("Please enter the start of the range (non-negative integer): ");
+                start = int.Parse(Console.ReadLine());
+                Console.Write("Please enter the end of the range (non-negative integer): ");
+                end = int.Parse(Console.ReadLine());
+                if (start > end)
+                {
+                    Console.WriteLine("Error: Start of the range must be less than or equal to the end of the range.");
+                }
+                else if (start < 0 || end < 0)
+                {
+                    Console.WriteLine("Error: Range values must be non-negative.");
+                }
+                else
+                {
+                    return (start, end);
+                }
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("Error: Invalid input. Please enter integer values.");
+            }
+        }
+    }
+
+    /**
+     * Displays the results of the prime number calculations.
+     */
+    public static void DisplayResults(int start, int end, List<int> lastThreePrimes, int countOfPrimes)
+    {
+        if (lastThreePrimes.Count > 0)
+        {
+            Console.Write("The last prime numbers in the range [" + start + ", " + end + "] are: ");
+            for (int i = 0; i < lastThreePrimes.Count; i++)
+            {
+                Console.Write(lastThreePrimes[i]);
+                if (i < lastThreePrimes.Count - 1)
+                {
+                    Console.Write(", ");
+                }
+            }
+            Console.WriteLine();
+        }
+        else
+        {
+            Console.WriteLine("No prime numbers found in the range [" + start + ", " + end + "]");
+        }
+        Console.WriteLine("The number of prime numbers in this range is: " + countOfPrimes);
+    }
+
+    public static void Main(string[] args)
+    {
+        // Get user input for the range
+        var (start, end) = GetUserInput();
+        // Calculate and display the results
+        var (lastThreePrimes, countOfPrimes) = PrimeStatistics(start, end
